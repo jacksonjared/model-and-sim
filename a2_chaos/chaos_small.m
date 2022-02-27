@@ -22,16 +22,23 @@ tic
 iterations = 1000;
 
 %%% Number of points in the X axis; Larger = more resolution
-xRes = 1e4;
+xRes = 1e5;
 
-%%% NUmber of points in the Y axis; Larger = more resolution
+%%% Number of points in the Y axis; Larger = more resolution
 yRes = 64;
+
+%%% Set to 1 to apply a colormap to the output plot, anything else is a mono
+%%% color plot
+colorGraph = 1;
+
+%%% The color map to use if colorGraph is set to 1
+cMap = 'hsv';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% Sets the limits on the growth rate to be between 0 and 4 since outside of
 %%% that range nothing happens. there will be xRes number of points in the array
-r = linspace(0, 4, xRes);
+r = ones(65,1) .* linspace(0, 4, xRes);
 
 %%% Preinitilizes X and gives it a starting value of 0.5. The starting value
 %%% does not actually matter, as long as it is not 0 or 1 since the final value
@@ -43,29 +50,24 @@ X = 0.5 .* ones(yRes, xRes);
 for i = 2:1:(iterations  + yRes)
   	cur = 1 + mod(i, yRes + 1);
     las = 1 + mod(i - 1, yRes + 1);
-    X(cur,:) = r .* X(las,:) .* (1 - X(las,:));
+    X(cur,:) = r(1,:) .* X(las,:) .* (1 - X(las,:));
 end
+X(:,end) = NaN;
 
 %%% Call It UI %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-line(r, X, 'Color', 'blue');
-%%lineXColor(r, X, 'hsv');
+if (colorGraph == 1)
+	colormap(cMap);
+	C(:,(3 * xRes / 4):xRes) = ones(65,1) .* (0:4/xRes:1);
+	patch(r', X', C', 'EdgeColor', 'interp', 'LineWidth', 0.5);
+else
+	line(r(1,:), X, 'Color', 'blue');
+end
+
 set(gca, 'XLim', [0 4], 'YLim', [0 1]);
-title(['The Bifurcation Diagram - ' num2str(xRes) ' r Values']);
+title(['The Bifurcation Diagram - ' num2str(xRes) ' r points']);
 xlabel("Growth rate (r)");
-ylabel("Final value/s");
+ylabel("convergence value/s");
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% See What's Become Of Me
 toc
-
-%%% This will plot the bifurcation diagram with a gradiant color on the x axis
-%%% but it is VERY slow since MATLAB doesn't allow multiple colors per line, so
-%%% it has to plot a new line between each point.
-function lineXColor(x, y, cmap)
-numPoints = length(x);
-pointColor = max(1, round( (0:numPoints) ./ numPoints .* 256));
-cmp = colormap(cmap);
-for i = 1:(numPoints - 1)
-	line([x(i) x(i + 1)], [y(:, i) y(:, i + 1)], "color", cmp(pointColor(i),:) )
-end
-end
