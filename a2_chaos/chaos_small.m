@@ -22,7 +22,7 @@ tic
 iterations = 1000;
 
 %%% Number of points in the X axis; Larger = more resolution
-xRes = 1e5;
+xRes = 1e4;
 
 %%% Number of points in the Y axis; Larger = more resolution
 yRes = 64;
