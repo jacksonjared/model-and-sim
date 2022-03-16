@@ -124,7 +124,7 @@ function psdPlot(signal, Fs, freq)
 	len = length(signal) - 1;
 
 	%%% 
-	psd = abs(fft(signal)).^2 ./ (1e4 * len);
+	psd = abs(fft(signal) .* 0.707 ).^2 ./ (1e4 * len);
 
 	%%% Convert to dBw for better dynamic range
 	psd_dBw = 10 .* log10( psd(1:(len / 2)) );
