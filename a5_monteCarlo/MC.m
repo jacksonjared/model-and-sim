@@ -33,13 +33,13 @@ Ts = 1e-3;
 Start = 0;
 
 %%% Integral upper bounds
-Stop = 10;
+Stop = 360;
 
 %%% How many points to use for monte carlo integration
 Points = 1e4;
 
 %%% Which test equation to use. 1 - 4 accepted, anything else defualts to 1
-Equ = 1;
+Equ = 4;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -115,10 +115,11 @@ set(gca, "XLim", [Start Stop], "YLim", [yMin yMax]);
 
 %%% Fromating the graph
 grid on;
-xlabel('X');
-ylabel('f(X)');
+xlabel('X', 'FontSize', 28);
+ylabel('f(X)', 'FontSize', 28);
 t = title([Equ '    |    Monte Carlo Integration: ' num2str(area_estimation) ...
 			'    True Value: ' Ans]);
+t.FontSize = 28;
 
 %%% See What's Become Of Me
 toc
