@@ -10,4 +10,4 @@ This data is modified from the Extended Yale Face Database B.  If using this dat
 
 [2] K. Lee, J. Ho, and D. J. Kriegman, Acquiring linear subspaces for face recognition under variable lighting, IEEE Trans. Pattern Anal. Mach. Intell., 27 (2005), pp. 684
 
-Link to website: vision.ucsd.edu/content/extended-yale-face-database-b-b}
+Link to website: vision.ucsd.edu/content/extended-yale-face-database-b-b
